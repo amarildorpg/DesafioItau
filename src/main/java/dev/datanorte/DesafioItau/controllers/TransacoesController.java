@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/transacao")
 public class TransacoesController {
-    private TransacaoRepository transacaoRepository;
+    private final TransacaoRepository transacaoRepository;
+    private final TransacaoService transacaoService;
 
     public TransacoesController(TransacaoRepository transacaoRepository, TransacaoService transacaoService) {
         this.transacaoRepository = transacaoRepository;
         this.transacaoService = transacaoService;
     }
-
-    private TransacaoService transacaoService;
 
 
     @PostMapping
@@ -34,14 +33,9 @@ public class TransacoesController {
 
     }
     @DeleteMapping
-    public ResponseEntity<Void> excluir(@RequestBody TransacaoDTO transacaoDTO) {
-        try {
-            transacaoService.validarTransacao(transacaoDTO);
-            return  ResponseEntity.status(HttpStatus.OK).build();
-
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.status(422).build();
-        }
+    public ResponseEntity<Void> deletar() {
+        transacaoRepository.deletarDados();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }
