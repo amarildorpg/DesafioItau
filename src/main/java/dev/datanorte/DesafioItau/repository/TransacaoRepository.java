@@ -3,6 +3,7 @@ package dev.datanorte.DesafioItau.repository;
 import dev.datanorte.DesafioItau.dto.TransacaoDTO;
 import org.springframework.stereotype.Repository;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
@@ -21,5 +22,9 @@ public class TransacaoRepository {
     //Apagar todas as transações da lista
     public void deletarDados(){
         listaTransacoes.clear();
+    }
+
+    public void estatistica(OffsetDateTime horaInicial){
+
     }
 }
