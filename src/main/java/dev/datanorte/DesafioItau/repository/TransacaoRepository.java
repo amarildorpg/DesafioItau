@@ -1,5 +1,6 @@
 package dev.datanorte.DesafioItau.repository;
 
+import dev.datanorte.DesafioItau.dto.EstatisticaDTO;
 import dev.datanorte.DesafioItau.dto.TransacaoDTO;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +25,19 @@ public class TransacaoRepository {
         listaTransacoes.clear();
     }
 
-    public void estatistica(OffsetDateTime horaInicial){
-
+    public EstatisticaDTO estatistica(OffsetDateTime horaInicial){
+        if (listaTransacoes.isEmpty()){
+            return new EstatisticaDTO(0,0.0,0.0,0.0,0.0);
+        }
+        final var summary = listaTransacoes.stream()
+                .filter(t ->
+                        t.getDataHora().isAfter(horaInicial) || t.getDataHora().isEqual(horaInicial))
+                .mapToDouble(t -> t.getValor().doubleValue())
+                .summaryStatistics();
+        return new EstatisticaDTO(summary.getCount(),
+                summary.getAverage(),
+                summary.getMax(),
+                summary.getMin(),
+                summary.getSum());
     }
 }

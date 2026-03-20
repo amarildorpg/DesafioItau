@@ -19,10 +19,11 @@ public class EstatisticasController {
     }
 
     @GetMapping
-    public ResponseEntity estatisticas() {
+    public ResponseEntity<?> estatisticas() {
         final var horaInicial = OffsetDateTime
-                .now().minusSeconds(properties.segundos());
-        return   ResponseEntity.ok().build();
+                .now()
+                .minusSeconds(properties.segundos());
+        return ResponseEntity.ok(transacaoRepository.estatistica(horaInicial));
     }
 
 
