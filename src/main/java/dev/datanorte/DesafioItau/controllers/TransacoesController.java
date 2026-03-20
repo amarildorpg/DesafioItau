@@ -31,6 +31,7 @@ public class TransacoesController {
             log.error("Erro e uma ou mais validações, tente novamente");
             return ResponseEntity.status(422).build();
         } catch (Exception e){
+            log.error("Erro no servidor, tente novamente");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
